@@ -10,5 +10,5 @@ import java.util.List;
 //@Repository
 public interface MatchRepository extends JpaRepository<Match, Long>, MatchRepositoryCustom {
 
-    List<Match> findMatchesByTeamIdAndSeasonId(Long teamId, Long seasonId);
+//    List<Match> findMatchesByTeamIdAndSeasonId(Long teamId, Long seasonId);
 }

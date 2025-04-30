@@ -31,8 +31,6 @@ public class Match {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "season_id")
     private Season season;
-    @Column(name="SEASON_ID")
-    private Long seasonId;
     @Column(name="MATCH_DATE")
     private LocalDate matchDate;
     @Column(name="HOME_AWAY")
