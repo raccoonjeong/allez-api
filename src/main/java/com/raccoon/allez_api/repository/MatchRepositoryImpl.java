@@ -1,5 +1,6 @@
 package com.raccoon.allez_api.repository;
 
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.raccoon.allez_api.dto.MatchDTO;
 import com.raccoon.allez_api.dto.QMatchDTO;
@@ -62,6 +63,49 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom{
                 .join(m.season, s)
                 .where(teamId != null ? m.team.teamId.eq(teamId) : null,
                         seasonYear != null ? s.seasonYear.eq(seasonYear) : null)
+                .fetchOne();
+
+        return new PageImpl<>(content, pageable, total != null ? total : 0);
+    }
+
+    @Override
+    public Page<MatchDTO> matchup(Long teamId1, Long teamId2, Pageable pageable) {
+        QMatch m = QMatch.match;
+        QTeam t1 = QTeam.team;
+        QTeam t2 = new QTeam("opponentTeam");
+
+        List<MatchDTO> content = queryFactory
+                .select(new QMatchDTO(
+                        m.matchId,
+                        m.team.teamName,
+                        m.opponentTeam.teamName,
+                        Expressions.asNumber(m.season.seasonYear),
+                        m.matchDate,
+                        m.homeAway,
+                        m.winDrawLoss,
+                        Expressions.asNumber(m.gain),
+                        Expressions.asNumber(m.loss)
+                ))
+                .from(m)
+                .join(m.team, t1)
+                .join(m.opponentTeam, t2)
+                .where(
+                        m.team.teamId.eq(teamId1).and(m.opponentTeam.teamId.eq(teamId2))
+                                .or(m.team.teamId.eq(teamId2).and(m.opponentTeam.teamId.eq(teamId1)))
+                )
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
+                .fetch();
+
+        Long total = queryFactory
+                .select(m.count())
+                .from(m)
+                .join(m.team, t1)
+                .join(m.opponentTeam, t2)
+                .where(
+                        m.team.teamId.eq(teamId1).and(m.opponentTeam.teamId.eq(teamId2))
+                                .or(m.team.teamId.eq(teamId2).and(m.opponentTeam.teamId.eq(teamId1)))
+                )
                 .fetchOne();
 
         return new PageImpl<>(content, pageable, total != null ? total : 0);

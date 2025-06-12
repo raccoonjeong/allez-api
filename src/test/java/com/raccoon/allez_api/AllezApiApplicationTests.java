@@ -65,13 +65,13 @@ class AllezApiApplicationTests {
 		assertThat(match.getMatchDate()).isEqualTo(expectedDate);
 	}
 
-	@Test
-	public void findMatchByTeamIdAndSeasonId() throws Exception{
-
-		List<Match> matchesByTeamIdAndSeasonId = matchRepository.findMatchesByTeamIdAndSeasonId(8L, 42L);
-
-		assertThat(matchesByTeamIdAndSeasonId).isNotNull();
-		assertThat(matchesByTeamIdAndSeasonId.size()).isEqualTo(38);
-
-	}
+//	@Test
+//	public void findMatchByTeamIdAndSeasonId() throws Exception{
+//
+//		List<Match> matchesByTeamIdAndSeasonId = matchRepository.findMatchesByTeamIdAndSeasonId(8L, 42L);
+//
+//		assertThat(matchesByTeamIdAndSeasonId).isNotNull();
+//		assertThat(matchesByTeamIdAndSeasonId.size()).isEqualTo(38);
+//
+//	}
 }

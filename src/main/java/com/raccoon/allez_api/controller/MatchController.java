@@ -37,4 +37,19 @@ public class MatchController {
         return matchService.searchMatches(teamId, seasonYear, pageable);
     }
 
+    @GetMapping("/matchup")
+    @Operation(summary = "팀 간 매치업 조회", description = "두 팀 간의 매치업 결과 조회")
+    @Parameters({
+            @Parameter(name = "teamId1", description = "팀 1 ID", example = "1"),
+            @Parameter(name = "teamId2", description = "팀 2 ID", example = "2"),
+    })
+    public Page<MatchDTO> matchup(
+            @RequestParam(name = "teamId1") Long teamId1,
+            @RequestParam(name = "teamId2") Long teamId2,
+            Pageable pageable) {
+
+        return matchService.matchup(teamId1, teamId2, pageable);
+    }
+
+
 }

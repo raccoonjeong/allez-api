@@ -6,4 +6,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface MatchRepositoryCustom {
     Page<MatchDTO> searchMatches(Long teamId, Integer seasonYear, Pageable pageble);
+
+    Page<MatchDTO> matchup(Long teamId1, Long teamId2, Pageable pageable);
 }

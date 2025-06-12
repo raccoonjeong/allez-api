@@ -18,4 +18,8 @@ public class MatchService {
     public Page<MatchDTO> searchMatches(Long teamId, Integer seasonYear, Pageable pageable) {
         return matchRepository.searchMatches(teamId, seasonYear, pageable);
     }
+
+    public Page<MatchDTO> matchup(Long teamId1, Long teamId2, Pageable pageable) {
+        return matchRepository.matchup(teamId1, teamId2, pageable);
+    }
 }
