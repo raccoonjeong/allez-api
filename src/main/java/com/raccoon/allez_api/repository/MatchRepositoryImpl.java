@@ -91,8 +91,9 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom{
                 .join(m.opponentTeam, t2)
                 .where(
                         m.team.teamId.eq(teamId1).and(m.opponentTeam.teamId.eq(teamId2))
-                                .or(m.team.teamId.eq(teamId2).and(m.opponentTeam.teamId.eq(teamId1)))
+//                                .or(m.team.teamId.eq(teamId2).and(m.opponentTeam.teamId.eq(teamId1)))
                 )
+                .orderBy(m.matchId.desc())
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -104,7 +105,6 @@ public class MatchRepositoryImpl implements MatchRepositoryCustom{
                 .join(m.opponentTeam, t2)
                 .where(
                         m.team.teamId.eq(teamId1).and(m.opponentTeam.teamId.eq(teamId2))
-                                .or(m.team.teamId.eq(teamId2).and(m.opponentTeam.teamId.eq(teamId1)))
                 )
                 .fetchOne();
 
